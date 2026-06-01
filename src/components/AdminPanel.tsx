@@ -857,29 +857,44 @@ export default function AdminPanel({
                     {/* Controls Column */}
                     <div className="md:col-span-2 space-y-4 text-xs font-sans">
                       <p className="text-gray-300 text-xs leading-relaxed">
-                        Este é o seu retrato oficial que aparece na seção <strong className="text-gold">"Sobre o Atelier"</strong> na página principal. Substitua-o enviando um arquivo de foto do seu celular ou do seu computador para personalizar seu portfólio.
+                        Este é o seu retrato oficial que aparece na seção <strong className="text-gold">"Sobre o Atelier"</strong> na página principal. Substitua-o enviando um arquivo de foto.
                       </p>
 
-                      <div className="flex flex-wrap gap-2.5 pt-1">
-                        <label className="px-4 py-3 bg-gold text-black hover:bg-gold/90 text-xs font-sans font-bold cursor-pointer transition-all duration-300 select-none flex items-center gap-2 hover:scale-[1.02]">
-                          <Upload className="w-4 h-4 text-black animate-pulse" /> 📷 ENVIAR MINHA FOTO (UPLOAD DE IMAGEM)
+                      <div className="flex flex-col sm:flex-row gap-3 pt-1 w-full">
+                        <label className="w-full flex-1 px-3 py-3 bg-gold text-black hover:bg-gold/90 text-[10px] sm:text-xs font-sans font-bold cursor-pointer transition-all duration-300 select-none flex items-center justify-center gap-2 text-center">
+                          <Upload className="w-4 h-4 text-black animate-pulse flex-shrink-0" /> 
+                          <span>📷 UPLOAD DA MINHA FOTO</span>
                           <input
                             type="file"
                             accept="image/*"
                             className="hidden"
-                            onChange={(e) => {
+                            onChange={async (e) => {
                               const file = e.target.files?.[0];
                               if (!file) return;
-                              const reader = new FileReader();
-                              reader.onload = (event) => {
-                                if (event.target?.result) {
-                                  setSettings({
-                                    ...settings,
-                                    profileImageUrl: event.target.result as string
-                                  });
+
+                              if (supabase) {
+                                const fileExt = file.name.split('.').pop();
+                                const fileName = `profile_${Date.now()}.${fileExt}`;
+                                const filePath = `profiles/${fileName}`;
+                                const { error } = await supabase.storage.from('lady_bucket').upload(filePath, file);
+                                if (error) {
+                                  alert('Erro ao enviar imagem: ' + error.message);
+                                  return;
                                 }
-                              };
-                              reader.readAsDataURL(file);
+                                const { data } = supabase.storage.from('lady_bucket').getPublicUrl(filePath);
+                                setSettings({ ...settings, profileImageUrl: data.publicUrl });
+                              } else {
+                                const reader = new FileReader();
+                                reader.onload = (event) => {
+                                  if (event.target?.result) {
+                                    setSettings({
+                                      ...settings,
+                                      profileImageUrl: event.target.result as string
+                                    });
+                                  }
+                                };
+                                reader.readAsDataURL(file);
+                              }
                             }}
                           />
                         </label>
