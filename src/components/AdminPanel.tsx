@@ -44,6 +44,7 @@ export default function AdminPanel({
   resetToDefault,
   onClose
 }: AdminPanelProps) {
+  const formRef = useRef<HTMLDivElement>(null);
   // Authentication states
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
@@ -172,6 +173,9 @@ export default function AdminPanel({
       whatsappLink: p.whatsappLink
     });
     setIsAddingNew(false);
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   const startAdd = (catalog: CatalogType) => {
@@ -188,6 +192,9 @@ export default function AdminPanel({
       imageUrl: catalog === 'Croche' ? 'crochet_mandala' : 'perfume_gold_tall',
       whatsappLink: ''
     });
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   // Save changes
@@ -285,12 +292,12 @@ export default function AdminPanel({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#000000]/95 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-      <div className="w-full max-w-4xl bg-[#090909] gold-fine-border p-4 sm:p-6 md:p-8 rounded-none my-4 sm:my-10 relative">
+    <div className="fixed inset-0 z-50 bg-[#000000]/95 backdrop-blur-md flex items-center justify-center p-0 sm:p-4 overflow-y-auto">
+      <div className="w-full max-w-4xl bg-[#090909] sm:gold-fine-border p-4 sm:p-6 md:p-8 rounded-none min-h-screen sm:min-h-0 sm:my-10 relative">
         {/* Absolute Close Header button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gold transition-colors duration-200"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gold transition-colors duration-200 z-50"
           id="btn-close-admin"
         >
           <X className="w-6 h-6" />
@@ -442,7 +449,7 @@ export default function AdminPanel({
                 className={`px-4 py-2 font-display uppercase tracking-wider transition-all select-none cursor-pointer ml-auto flex items-center gap-1.5 ${activeTab === 'Config' ? 'border-b-2 border-gold text-gold font-bold' : 'text-gray-400 hover:text-white'}`}
                 id="tab-config"
               >
-                <Upload className="w-3.5 h-3.5 text-gold animate-pulse" /> Foto de Perfil & WhatsApp
+                <Upload className="w-3.5 h-3.5 text-gold animate-pulse" /> Foto & Config
               </button>
             </div>
 
@@ -459,7 +466,7 @@ export default function AdminPanel({
                       className="px-3 py-1 bg-gold text-black hover:bg-gold/80 font-mono text-[11px] font-bold flex items-center gap-1 select-none cursor-pointer"
                       id="btn-add-product"
                     >
-                      <Plus className="w-3.5 h-3.5" /> NOVO ITEM
+                      <Plus className="w-3.5 h-3.5" /> NOVO
                     </button>
                   </div>
 
@@ -473,7 +480,7 @@ export default function AdminPanel({
                           <div 
                             key={p.id} 
                             onClick={() => startEdit(p)}
-                            title="Clique em qualquer lugar da linha para editar este item"
+                            title="Clique para editar este item"
                             className={`flex items-center justify-between p-3 border transition-all cursor-pointer ${editingProduct?.id === p.id ? 'bg-[#151515] border-gold ring-1 ring-gold/20' : 'bg-[#0A0A0A] border-white/5 hover:border-gold/30 hover:bg-[#111111]/80'}`}
                           >
                             <div className="flex-1 min-w-0 pr-2">
@@ -510,11 +517,14 @@ export default function AdminPanel({
                 </div>
 
                 {/* Create/Edit Form */}
-                <div className="bg-[#0e0e0e] border border-white/5 p-4 space-y-4">
+                <div ref={formRef} className="bg-[#0e0e0e] border border-white/5 p-4 space-y-4">
                   {(isAddingNew || editingProduct) ? (
                     <form onSubmit={handleSaveProduct} className="space-y-4" id="form-product-edit">
-                      <h3 className="text-xs font-mono text-gold tracking-widest uppercase border-b border-white/10 pb-2">
-                        {isAddingNew ? `ADICIONAR NOVO AO CATÁLOGO ${activeTab.toUpperCase()}` : `EDITAR ITEM [${editingProduct?.indexNum}]`}
+                      <h3 className="text-xs font-mono text-gold tracking-widest uppercase border-b border-white/10 pb-2 flex justify-between items-center">
+                        <span>{isAddingNew ? `ADICIONAR NOVO AO CATÁLOGO ${activeTab.toUpperCase()}` : `EDITAR ITEM [${editingProduct?.indexNum}]`}</span>
+                        <button type="button" onClick={() => { setIsAddingNew(false); setEditingProduct(null); }} className="text-gray-500 hover:text-white p-1 bg-white/5 cursor-pointer">
+                          <X className="w-3.5 h-3.5" />
+                        </button>
                       </h3>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
@@ -585,7 +595,7 @@ export default function AdminPanel({
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs mt-3">
 
                         <div>
-                          <label className="block text-gray-400 font-mono mb-1">Estilo Visual da Garrafa / Arte ou Foto</label>
+                          <label className="block text-gray-400 font-mono mb-1">Estilo Visual / Foto</label>
                           <div className="space-y-2">
                             <select
                               value={formData.imageUrl.startsWith('data:') || formData.imageUrl.startsWith('http') ? 'custom' : formData.imageUrl}
@@ -683,7 +693,7 @@ export default function AdminPanel({
                       </div>
 
                       <div className="text-xs">
-                        <label className="block text-gray-400 font-mono mb-1">Mensagem do Link de Encomenda do WhatsApp (Customizado)</label>
+                        <label className="block text-gray-400 font-mono mb-1">Mensagem do Link de Encomenda do WhatsApp</label>
                         <input
                           type="text"
                           value={formData.whatsappLink}
@@ -716,11 +726,14 @@ export default function AdminPanel({
                       </div>
                     </form>
                   ) : (
-                    <div className="h-full flex flex-col items-center justify-center text-center py-16 text-gray-400">
-                      <FileText className="w-10 h-10 text-gold/20 mb-3" />
-                      <p className="text-xs font-mono">Nenhum item em edição.</p>
-                      <p className="text-[10px] text-gray-600 font-mono mt-1">
-                        Selecione um produto da lista no lado esquerdo ou clique em "Novo Item" para modificar as informações exibidas na landing page.
+                    <div 
+                      className="flex flex-col items-center justify-center text-center p-8 py-16 bg-[#111] hover:bg-[#151515] border-2 border-dashed border-gold/30 hover:border-gold/60 cursor-pointer transition-all duration-300 mx-2 mb-2"
+                      onClick={() => startAdd(activeTab)}
+                    >
+                      <Plus className="w-12 h-12 text-gold mb-3 animate-pulse" />
+                      <h4 className="font-mono text-sm text-gold font-bold mb-2">CLIQUE AQUI PARA ADICIONAR NOVO PRODUTO</h4>
+                      <p className="text-xs text-gray-400 font-sans max-w-[250px]">
+                        Ou selecione o ícone de lápis ✏️ em um produto na lista acima para editar sua foto e detalhes.
                       </p>
                     </div>
                   )}
