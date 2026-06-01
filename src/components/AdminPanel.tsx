@@ -53,14 +53,6 @@ export default function AdminPanel({
   const [newPassword, setNewPassword] = useState<string>('');
   const [passwordChangeStatus, setPasswordChangeStatus] = useState<string>('');
 
-  useEffect(() => {
-    if (supabase) {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) setIsAuthenticated(true);
-      });
-    }
-  }, []);
-
   // CRUD & Editing states
   const [activeTab, setActiveTab] = useState<'Natura' | 'O Boticario' | 'Croche' | 'Config'>('Natura');
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
