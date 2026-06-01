@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Product, AdminSettings, CatalogType } from '../types';
-import { isSupabaseConfigured, SUPABASE_SQL_SETUP } from '../lib/supabase';
+import { isSupabaseConfigured, SUPABASE_SQL_SETUP, supabase } from '../lib/supabase';
 import { 
   Lock, 
   Unlock, 
@@ -46,6 +46,16 @@ export default function AdminPanel({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [passwordChangeStatus, setPasswordChangeStatus] = useState<string>('');
+
+  useEffect(() => {
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) setIsAuthenticated(true);
+      });
+    }
+  }, []);
 
   // CRUD & Editing states
   const [activeTab, setActiveTab] = useState<'Natura' | 'O Boticario' | 'Croche' | 'Config'>('Natura');
@@ -60,6 +70,7 @@ export default function AdminPanel({
     description: '',
     badge: '',
     price: '',
+    promotionalPrice: '',
     notes: '',
     imageUrl: 'perfume_gold_tall',
     whatsappLink: ''
@@ -69,15 +80,26 @@ export default function AdminPanel({
   const [importStatus, setImportStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   // Handle Login
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const activePass = settings.cmsPassword || 'leidypremium';
-    // Premium password validation supporting both custom and hardcoded master fallbacks
-    if (password === activePass || password === '12345' || password === 'leidypremium') {
-      setIsAuthenticated(true);
-      setLoginError('');
+    if (supabase) {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: 'admin@leidy.com',
+        password: password
+      });
+      if (error) {
+        setLoginError('Senha ou usuário incorretos. Tente novamente.');
+      } else {
+        setIsAuthenticated(true);
+        setLoginError('');
+      }
     } else {
-      setLoginError('Senha de segurança inválida. Tente novamente.');
+      if (password === 'leidypremium') {
+        setIsAuthenticated(true);
+        setLoginError('');
+      } else {
+        setLoginError('Senha de segurança inválida no modo offline.');
+      }
     }
   };
 
@@ -102,21 +124,34 @@ export default function AdminPanel({
     logAction(`Deletou o produto ID: ${id}. Reindexado para ${reindexed.length} itens.`);
   };
 
-  // Handle uploading product image file converting to Base64 data Uri
-  const handleProductImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle uploading product image file converting to Base64 data Uri or Supabase Storage
+  const handleProductImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        setFormData(prev => ({
-          ...prev,
-          imageUrl: event.target.result as string
-        }));
+    if (supabase) {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `products/${fileName}`;
+      const { error } = await supabase.storage.from('lady_bucket').upload(filePath, file);
+      if (error) {
+        alert('Erro ao enviar imagem: ' + error.message);
+        return;
       }
-    };
-    reader.readAsDataURL(file);
+      const { data } = supabase.storage.from('lady_bucket').getPublicUrl(filePath);
+      setFormData(prev => ({ ...prev, imageUrl: data.publicUrl }));
+    } else {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setFormData(prev => ({
+            ...prev,
+            imageUrl: event.target.result as string
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // Switch edit or create
@@ -128,6 +163,7 @@ export default function AdminPanel({
       description: p.description,
       badge: p.badge,
       price: p.price,
+      promotionalPrice: p.promotionalPrice || '',
       notes: p.notes,
       imageUrl: p.imageUrl,
       whatsappLink: p.whatsappLink
@@ -144,6 +180,7 @@ export default function AdminPanel({
       description: '',
       badge: catalog === 'Croche' ? 'LEIDY CROCHÊ PREMIUM' : `NATURA EXCLUSIF`,
       price: 'R$ ',
+      promotionalPrice: '',
       notes: catalog === 'Croche' ? 'Dimensões: | Fio Algodão' : 'Notas olfativas principais:',
       imageUrl: catalog === 'Croche' ? 'crochet_mandala' : 'perfume_gold_tall',
       whatsappLink: ''
@@ -169,6 +206,7 @@ export default function AdminPanel({
         description: formData.description,
         badge: formData.badge || 'PREMIUM SELECTION',
         price: formData.price || 'Sob Consulta',
+        promotionalPrice: formData.promotionalPrice || undefined,
         notes: formData.notes,
         imageUrl: formData.imageUrl,
         whatsappLink: linkText,
@@ -186,6 +224,7 @@ export default function AdminPanel({
             description: formData.description,
             badge: formData.badge,
             price: formData.price,
+            promotionalPrice: formData.promotionalPrice || undefined,
             notes: formData.notes,
             imageUrl: formData.imageUrl,
             whatsappLink: formData.whatsappLink || `Olá Leidy! Quero encomendar o ${formData.title}`
@@ -281,10 +320,10 @@ export default function AdminPanel({
             <form onSubmit={handleLogin} className="space-y-5" id="form-admin-login">
               <div>
                 <label className="block text-xs font-mono text-gold tracking-widest uppercase mb-1">
-                  Usuário Autenticado
+                  Email Autenticado
                 </label>
                 <div className="w-full px-4 py-3 bg-[#111] text-gray-400 font-mono text-sm border border-white/10 select-none">
-                  Leidy (Gerente Geral)
+                  admin@leidy.com
                 </div>
               </div>
 
@@ -508,6 +547,21 @@ export default function AdminPanel({
                         </div>
 
                         <div>
+                          <label className="block text-gray-400 font-mono mb-1 text-gold">Preço Promocional (Opcional)</label>
+                          <input
+                            type="text"
+                            value={formData.promotionalPrice || ''}
+                            onChange={(e) => setFormData({ ...formData, promotionalPrice: e.target.value })}
+                            placeholder="Ex: R$ 199,90"
+                            className="w-full bg-black border border-gold/30 p-2 text-white outline-none focus:border-gold"
+                            id="edit-promotional-price"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs mt-3">
+
+                        <div>
                           <label className="block text-gray-400 font-mono mb-1">Estilo Visual da Garrafa / Arte ou Foto</label>
                           <div className="space-y-2">
                             <select
@@ -700,19 +754,46 @@ export default function AdminPanel({
 
                     <div className="border-t border-white/10 pt-4 mt-2">
                       <label className="block text-xs font-mono text-gold tracking-widest uppercase mb-1">
-                        Sua Senha do Painel CMS
+                        Alterar Senha de Acesso Seguro (Painel CMS)
                       </label>
-                      <input
-                        type="text"
-                        value={settings.cmsPassword || ''}
-                        onChange={(e) => setSettings({ ...settings, cmsPassword: e.target.value })}
-                        placeholder="Ex: uma_senha_segura_para_leidy"
-                        className="w-full bg-[#0E0E0E] border border-gold/30 p-2 text-white outline-none focus:border-gold font-mono"
-                        id="config-cms-password"
-                      />
+                      <div className="flex gap-2">
+                        <input
+                          type="password"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          placeholder="Digite a nova senha segura..."
+                          className="flex-1 bg-[#0E0E0E] border border-gold/30 p-2 text-white outline-none focus:border-gold font-mono"
+                          id="config-new-password"
+                        />
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            if (!newPassword) return;
+                            if (supabase) {
+                              const { error } = await supabase.auth.updateUser({ password: newPassword });
+                              if (error) {
+                                setPasswordChangeStatus('Erro: ' + error.message);
+                              } else {
+                                setPasswordChangeStatus('Sucesso! Senha alterada. Na próxima visita use esta senha.');
+                                setNewPassword('');
+                              }
+                            } else {
+                              setPasswordChangeStatus('Erro: Banco de dados não conectado.');
+                            }
+                          }}
+                          className="bg-gold text-black px-4 font-mono font-bold hover:bg-gold/90 transition-colors"
+                        >
+                          SALVAR
+                        </button>
+                      </div>
                       <span className="text-[9px] text-gray-500 block mt-1 leading-normal">
-                        *Senha exclusiva utilizada para acessar este painel. Altere e salve ao realizar a entrega definitiva para a Leidy cadastrar seus dados.
+                        *Ao salvar, a senha de segurança do Supabase será redefinida. Guarde-a com segurança, nem os desenvolvedores terão acesso a ela.
                       </span>
+                      {passwordChangeStatus && (
+                        <p className={`text-[10px] font-mono mt-2 p-1.5 ${passwordChangeStatus.includes('Sucesso') ? 'text-green-400 border border-green-900/50 bg-green-950/20' : 'text-red-400 border border-red-900/50 bg-red-950/20'}`}>
+                          {passwordChangeStatus}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>

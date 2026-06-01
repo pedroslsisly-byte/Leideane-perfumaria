@@ -92,21 +92,19 @@ export default function App() {
             storeName: settingsData.store_name,
             whatsappNumber: settingsData.whatsapp_number,
             customGreeting: settingsData.custom_greeting,
-            cmsPassword: settingsData.cms_password || undefined,
             profileImageUrl: settingsData.profile_image_url || undefined,
           });
         } else {
           // No row found: seed the default row
           await supabase
             .from('lady_settings')
-            .insert({
+            .upsert({
               id: 'default',
               store_name: settings.storeName,
               whatsapp_number: settings.whatsappNumber,
               custom_greeting: settings.customGreeting,
-              cms_password: settings.cmsPassword || null,
               profile_image_url: settings.profileImageUrl || null,
-            });
+            }, { onConflict: 'id' });
         }
 
         // 2. Fetch products from 'lady_products'
@@ -124,6 +122,7 @@ export default function App() {
             badge: p.badge,
             indexNum: p.index_num,
             price: p.price,
+            promotionalPrice: p.promotional_price,
             notes: p.notes,
             imageUrl: p.image_url,
             whatsappLink: p.whatsapp_link,
@@ -140,6 +139,7 @@ export default function App() {
               badge: p.badge,
               index_num: p.indexNum,
               price: p.price,
+              promotional_price: p.promotionalPrice || null,
               notes: p.notes,
               image_url: p.imageUrl,
               whatsapp_link: p.whatsappLink,
@@ -173,6 +173,7 @@ export default function App() {
           badge: p.badge,
           index_num: p.indexNum,
           price: p.price,
+          promotional_price: p.promotionalPrice || null,
           notes: p.notes,
           image_url: p.imageUrl,
           whatsapp_link: p.whatsappLink,
@@ -463,8 +464,9 @@ export default function App() {
 
   // Handle WhatsApp Checkout Message Compile
   const handleWhatsAppCheckout = (p: Product) => {
+    const finalPrice = p.promotionalPrice || p.price;
     const textMessage = p.whatsappLink ? encodeURIComponent(p.whatsappLink) 
-      : encodeURIComponent(`Olá Leidy! Fiquei encantada pelo "${p.title}" do seu catálogo de luxo (${p.price}). Gostaria de encomendar esta peça!`);
+      : encodeURIComponent(`Olá Leidy! Fiquei encantada pelo "${p.title}" do seu catálogo de luxo (${finalPrice}). Gostaria de encomendar esta peça!`);
     const waUrl = `https://wa.me/${settings.whatsappNumber}?text=${textMessage}`;
     window.open(waUrl, '_blank');
   };
@@ -653,9 +655,20 @@ export default function App() {
 
                   {/* Bottom Panel Actions */}
                   <div className="pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between mt-1">
-                    <span className="text-xs font-mono font-medium text-white/80 underline underline-offset-4 sm:underline-offset-8 decoration-gold/30">
-                      {p.price}
-                    </span>
+                    <div className="flex flex-col">
+                      {p.promotionalPrice ? (
+                        <>
+                          <span className="text-[9px] font-mono font-medium text-white/40 line-through decoration-red-500/50">{p.price}</span>
+                          <span className="text-xs font-mono font-bold text-gold underline underline-offset-4 decoration-gold/50">
+                            {p.promotionalPrice}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-xs font-mono font-medium text-white/80 underline underline-offset-4 sm:underline-offset-8 decoration-gold/30">
+                          {p.price}
+                        </span>
+                      )}
+                    </div>
                     <div 
                       className="w-7 h-7 sm:w-8 sm:h-8 rounded-none border border-gold bg-transparent hover:bg-gold text-gold hover:text-black flex items-center justify-center transition-all duration-300"
                     >
@@ -829,7 +842,18 @@ export default function App() {
 
                   {/* Pricing footer block */}
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-5">
-                    <span className="text-xs font-mono font-medium tracking-wider text-white/50 underline underline-offset-8 decoration-gold/20 group-hover:text-white transition-colors duration-200">{p.price}</span>
+                    <div className="flex flex-col">
+                      {p.promotionalPrice ? (
+                        <>
+                          <span className="text-[9px] font-mono font-medium text-white/40 line-through decoration-red-500/50">{p.price}</span>
+                          <span className="text-xs font-mono font-bold text-gold underline underline-offset-4 decoration-gold/50 group-hover:text-gold transition-colors duration-200">
+                            {p.promotionalPrice}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-xs font-mono font-medium tracking-wider text-white/50 underline underline-offset-8 decoration-gold/20 group-hover:text-white transition-colors duration-200">{p.price}</span>
+                      )}
+                    </div>
                     <span className="text-[9px] text-gold font-sans tracking-[0.2em] font-semibold flex items-center gap-1">
                       DETALHES <ChevronRight className="w-3 h-3 text-gold" />
                     </span>
