@@ -509,7 +509,7 @@ export default function AdminPanel({
                 </div>
 
                 {/* Create/Edit Form */}
-                <div ref={formRef} className="bg-[#0e0e0e] border border-white/5 p-4 space-y-4">
+                <div ref={formRef} className={`bg-[#0e0e0e] border border-white/5 p-4 space-y-4 ${!(isAddingNew || editingProduct) ? 'hidden lg:block' : ''}`}>
                   {(isAddingNew || editingProduct) ? (
                     <form onSubmit={handleSaveProduct} className="space-y-4" id="form-product-edit">
                       <h3 className="text-xs font-mono text-gold tracking-widest uppercase border-b border-white/10 pb-2 flex justify-between items-center">
@@ -718,14 +718,11 @@ export default function AdminPanel({
                       </div>
                     </form>
                   ) : (
-                    <div 
-                      className="flex flex-col items-center justify-center text-center p-8 py-16 bg-[#111] hover:bg-[#151515] border-2 border-dashed border-gold/30 hover:border-gold/60 cursor-pointer transition-all duration-300 mx-2 mb-2"
-                      onClick={() => startAdd(activeTab)}
-                    >
-                      <Plus className="w-12 h-12 text-gold mb-3 animate-pulse" />
-                      <h4 className="font-mono text-sm text-gold font-bold mb-2">CLIQUE AQUI PARA ADICIONAR NOVO PRODUTO</h4>
-                      <p className="text-xs text-gray-400 font-sans max-w-[250px]">
-                        Ou selecione o ícone de lápis ✏️ em um produto na lista acima para editar sua foto e detalhes.
+                    <div className="h-full flex flex-col items-center justify-center text-center py-16 text-gray-400">
+                      <FileText className="w-10 h-10 text-gold/20 mb-3" />
+                      <p className="text-xs font-mono">Nenhum item em edição.</p>
+                      <p className="text-[10px] text-gray-600 font-mono mt-1">
+                        Selecione um produto da lista no lado esquerdo ou clique em "NOVO" para editar detalhes.
                       </p>
                     </div>
                   )}
