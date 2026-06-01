@@ -11,7 +11,11 @@ export default defineConfig(() => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
+        injectRegister: 'auto',
         includeAssets: ['pwa-192x192.png', 'pwa-512x512.png'],
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
+        },
         manifest: {
           name: 'Leidy Perfumaria e Crochê Premium',
           short_name: 'Leidy Premium',
