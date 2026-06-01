@@ -366,9 +366,6 @@ export default function AdminPanel({
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
-                <span className="text-[10px] font-mono text-gray-500 mt-1.5 block leading-normal">
-                  *A senha padrão inicial de entrega é <code className="text-gold bg-gold/10 px-1 py-0.5 font-bold">leidypremium</code>. Caso já tenha registrado sua própria senha nas configurações, digite-a acima.
-                </span>
               </div>
 
               {loginError && (
@@ -626,9 +623,9 @@ export default function AdminPanel({
 
                             {/* Uploader Buttons */}
                             <div className="flex gap-2">
-                              <label className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 text-gold border border-gold/20 hover:border-gold/40 text-[10px] font-mono font-bold cursor-pointer transition-colors select-none">
-                                <Upload className="w-3.5 h-3.5 text-gold" />
-                                <span>📷 FAZER UPLOAD DE FOTO (SEU ARQUIVO)</span>
+                              <label className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-gold/10 hover:bg-gold/20 text-gold border border-gold/20 hover:border-gold/40 text-[10px] sm:text-[11px] font-mono font-bold cursor-pointer transition-colors select-none text-center">
+                                <Upload className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold flex-shrink-0" />
+                                <span>📷 UPLOAD DA FOTO</span>
                                 <input
                                   type="file"
                                   accept="image/*"
@@ -1058,11 +1055,11 @@ export default function AdminPanel({
               </div>
             )}
 
-            {/* Admin logout actions */}
-            <div className="flex border-t border-white/10 pt-4 items-center justify-between text-xs">
-              <span className="text-gray-500 font-mono">
-                Sistema de gerenciamento offline-first persistido via LocalStorage.
-              </span>
+            {/* FOOTER DO PAINEL ADMIN */}
+        <div className="mt-8 pt-4 border-t border-gold/20 flex justify-between items-center px-2">
+          <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
+            Sistema Seguro • Nuvem Ativa
+          </div> 
               <button
                 onClick={() => {
                   setIsAuthenticated(false);
