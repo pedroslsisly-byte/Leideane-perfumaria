@@ -22,7 +22,9 @@ import {
   Phone,
   HelpCircle,
   Database,
-  Copy
+  Copy,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -46,6 +48,7 @@ export default function AdminPanel({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [newPassword, setNewPassword] = useState<string>('');
   const [passwordChangeStatus, setPasswordChangeStatus] = useState<string>('');
 
@@ -310,10 +313,23 @@ export default function AdminPanel({
 
         {/* NOT AUTHENTICATED FORM SCREEN */}
         {!isAuthenticated ? (
-          <div className="max-w-md mx-auto py-8">
+          <div className="max-w-md mx-auto py-4">
+            {/* ALERT BOX FOR NORMAL USERS */}
+            <div className="bg-red-950/40 border-l-4 border-red-600 p-4 mb-8">
+              <div className="flex items-start">
+                <Lock className="w-5 h-5 text-red-500 mr-3 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-red-500 font-bold font-mono text-sm uppercase tracking-wider">Acesso Altamente Restrito</h3>
+                  <p className="text-red-200/70 text-xs mt-1 leading-relaxed">
+                    Esta é a central de administração da loja. Se você é um cliente, por favor, feche esta janela para retornar ao catálogo público.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="text-center mb-8">
               <p className="text-sm text-gray-300">
-                Seja bem-vinda, <strong className="text-gold">Leidy</strong>. Este espaço é restrito para gerenciamento dos seus catálogos de Perfumaria Natura, O Boticário e Crochês Finos.
+                Seja bem-vinda, <strong className="text-gold">Leidy</strong>. Digite sua senha pessoal para gerenciar os catálogos.
               </p>
             </div>
 
@@ -331,15 +347,25 @@ export default function AdminPanel({
                 <label className="block text-xs font-mono text-gold tracking-widest uppercase mb-1">
                   Chave de Acesso / Senha
                 </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full px-4 py-3 bg-black text-white font-mono text-sm border border-gold/30 focus:border-gold outline-none transition-colors"
-                  required
-                  id="input-admin-password"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-4 py-3 bg-black text-white font-mono text-sm border border-gold/30 focus:border-gold outline-none transition-colors pr-12"
+                    required
+                    id="input-admin-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gold transition-colors p-1"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
                 <span className="text-[10px] font-mono text-gray-500 mt-1.5 block leading-normal">
                   *A senha padrão inicial de entrega é <code className="text-gold bg-gold/10 px-1 py-0.5 font-bold">leidypremium</code>. Caso já tenha registrado sua própria senha nas configurações, digite-a acima.
                 </span>
