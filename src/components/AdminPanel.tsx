@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Product, AdminSettings, CatalogType } from '../types';
 import { isSupabaseConfigured, SUPABASE_SQL_SETUP, supabase } from '../lib/supabase';
 import { 
