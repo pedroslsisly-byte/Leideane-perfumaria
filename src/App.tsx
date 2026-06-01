@@ -25,7 +25,10 @@ import {
   Compass, 
   X,
   Instagram,
-  ShoppingBag
+  ShoppingBag,
+  Heart,
+  Calendar,
+  Phone
 } from 'lucide-react';
 
 const WhatsAppIcon = ({ className = "w-5 h-5", ...props }) => (

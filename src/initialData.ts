@@ -197,6 +197,5 @@ export const DEFAULT_SETTINGS: AdminSettings = {
   storeName: 'Lady Cosméticos - Perfumaria & Crochê Premium',
   whatsappNumber: '5591985054580', // Active number for Lady Cosméticos
   customGreeting: 'Olá! Conheci seu catálogo de luxo da Lady Cosméticos e adorei as peças.',
-  cmsPassword: 'leidypremium', // Initial default password!
   profileImageUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80&w=600' // Elegant default reference image representing Leidy
 };
