@@ -1,0 +1,6 @@
+{
+  "name": "Leidy Perfumaria e Crochê Premium",
+  "description": "Premium Sales Landing Page e CMS para fragrâncias exclusivas Natura & O Boticário e a sofisticação da arte em crochê.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
