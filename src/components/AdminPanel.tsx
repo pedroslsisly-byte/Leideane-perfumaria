@@ -47,7 +47,6 @@ export default function AdminPanel({
   const formRef = useRef<HTMLDivElement>(null);
   // Authentication states
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('admin@leidy.com');
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -79,17 +78,9 @@ export default function AdminPanel({
   // Handle Login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Always allow master offline credentials
-    if (email === 'admin@leidy.com' && password === 'leidypremium') {
-      setIsAuthenticated(true);
-      setLoginError('');
-      return;
-    }
-
     if (supabase) {
       const { error } = await supabase.auth.signInWithPassword({
-        email: email,
+        email: 'admin@leidy.com',
         password: password
       });
       if (error) {
@@ -346,14 +337,9 @@ export default function AdminPanel({
                 <label className="block text-xs font-mono text-gold tracking-widest uppercase mb-1">
                   Email Autenticado
                 </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-black text-white font-mono text-sm border border-gold/30 focus:border-gold outline-none transition-colors"
-                  required
-                  id="input-admin-email"
-                />
+                <div className="w-full px-4 py-3 bg-[#111] text-gray-400 font-mono text-sm border border-white/10 select-none">
+                  admin@leidy.com
+                </div>
               </div>
 
               <div>
