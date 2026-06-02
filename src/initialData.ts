@@ -17,7 +17,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 294,90',
     notes: 'Copaíba preciosa purificada, combinada com o calor do Vetiver e notas de Âmbar profundo.',
     imageUrl: 'perfume_gold_tall',
-    whatsappLink: 'Olá Leidy! Desejo encomendar o Essencial Único Natura (01/15) por R$ 294,90'
+    whatsappLink: 'Olá Leide! Desejo encomendar o Essencial Único Natura (01/15) por R$ 294,90'
   },
   {
     id: 'nat_2',
@@ -29,7 +29,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 199,90',
     notes: 'Priprioca rústica da Amazônia, Baunilha Negra, Sândalo indiano e notas de couro refinado.',
     imageUrl: 'perfume_obsidian_block',
-    whatsappLink: 'Olá Leidy! Gostaria do Homem Dom Natura (02/15) por R$ 199,90'
+    whatsappLink: 'Olá Leide! Gostaria do Homem Dom Natura (02/15) por R$ 199,90'
   },
   {
     id: 'nat_3',
@@ -41,7 +41,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 174,90',
     notes: 'Buquê floral expressivo de Jasmim, fundido à riqueza do Patchouli premium e fava de Ambar.',
     imageUrl: 'perfume_bronze_ellipse',
-    whatsappLink: 'Olá Leidy! Tenho interesse no Ilía Ser Natura (03/15) por R$ 174,90'
+    whatsappLink: 'Olá Leide! Tenho interesse no Ilía Ser Natura (03/15) por R$ 174,90'
   },
   {
     id: 'nat_4',
@@ -53,7 +53,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 189,90',
     notes: 'Flor de Metamorfose amazônica, Patchouli precioso, Pimenta-rosa fresca e Cassis silvestre.',
     imageUrl: 'perfume_gold_flat',
-    whatsappLink: 'Olá Leidy! Desejo adquirir o Luna Valentia Natura (04/15) por R$ 189,90'
+    whatsappLink: 'Olá Leide! Desejo adquirir o Luna Valentia Natura (04/15) por R$ 189,90'
   },
   {
     id: 'nat_5',
@@ -65,7 +65,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 265,00',
     notes: 'Patchouli premium, Baunilha madura, Mandarina fresca e pétalas de Rosa damascena.',
     imageUrl: 'perfume_rose_gold_cylinder',
-    whatsappLink: 'Olá Leidy! Quero detalhes do Una Artisan Natura (05/15) por R$ 265,00'
+    whatsappLink: 'Olá Leide! Quero detalhes do Una Artisan Natura (05/15) por R$ 265,00'
   },
 
   // --- O BOTICÁRIO CATALÙGUE (5 Fragrances) ---
@@ -79,7 +79,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 229,90',
     notes: 'Acordos de Whisky turfado, Âmbar escuro vulcânico, Sândalo e notas especiadas de pimenta-preta.',
     imageUrl: 'perfume_pitch_black',
-    whatsappLink: 'Olá Leidy! Gostaria do Malbec Black O Boticário (06/15) por R$ 229,90'
+    whatsappLink: 'Olá Leide! Gostaria do Malbec Black O Boticário (06/15) por R$ 229,90'
   },
   {
     id: 'bot_2',
@@ -91,7 +91,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 289,90',
     notes: 'Lírios de São José, Mandarina espanhola, Pêssego aveludado, Baunilha e Almíscar sedoso.',
     imageUrl: 'perfume_crystal_gold',
-    whatsappLink: 'Olá Leidy! Desejo o luxuoso Lily Eau de Parfum O Boticário (07/15) por R$ 289,90'
+    whatsappLink: 'Olá Leide! Desejo o luxuoso Lily Eau de Parfum O Boticário (07/15) por R$ 289,90'
   },
   {
     id: 'bot_3',
@@ -103,7 +103,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 299,90',
     notes: 'Rosa Negra de Grasse, Oud nobre, Patchouli de Singapura e fava de Baunilha Gourmet quente.',
     imageUrl: 'perfume_jewelry_glass',
-    whatsappLink: 'Olá Leidy! Tenho grande interesse no Elysée Succès O Boticário (08/15) por R$ 299,90'
+    whatsappLink: 'Olá Leide! Tenho grande interesse no Elysée Succès O Boticário (08/15) por R$ 299,90'
   },
   {
     id: 'bot_4',
@@ -115,7 +115,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 284,90',
     notes: 'Sândalo da Nova Caledônia, Noz-moscada fresca, Gengibre azul e Cedro do atlas.',
     imageUrl: 'perfume_brushed_metal_cylinder',
-    whatsappLink: 'Olá Leidy! Quero reservar o Zaad Santal O Boticário (09/15) por R$ 284,90'
+    whatsappLink: 'Olá Leide! Quero reservar o Zaad Santal O Boticário (09/15) por R$ 284,90'
   },
   {
     id: 'bot_5',
@@ -127,7 +127,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 149,90',
     notes: 'Maçã fresca de Vermont, Flor de Amora, Jasmim Sambac e nuances de Chocolate Amargo.',
     imageUrl: 'perfume_scarlet_globe',
-    whatsappLink: 'Olá Leidy! Gostaria de encomendar o Floratta Red O Boticário (10/15) por R$ 149,90'
+    whatsappLink: 'Olá Leide! Gostaria de encomendar o Floratta Red O Boticário (10/15) por R$ 149,90'
   },
 
   // --- CROCHET ARTISTRY (5 Masterpieces) ---
@@ -141,7 +141,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 380,00',
     notes: '1.20m x 0.80m | Algodão 100% Orgânico nº 8 | Trama dupla com bico rendado imperial.',
     imageUrl: 'crochet_mandala',
-    whatsappLink: 'Olá Leidy! Estou apaixonada pelo Tapete Imperial de Crochê (11/15) por R$ 380,00'
+    whatsappLink: 'Olá Leide! Estou apaixonada pelo Tapete Imperial de Crochê (11/15) por R$ 380,00'
   },
   {
     id: 'cro_2',
@@ -153,7 +153,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 620,00',
     notes: '1.80m x 1.40m | Fio Mercerizado duplo em Bronze Metálico | Ponto colmeia geométrico.',
     imageUrl: 'crochet_weave_blanket',
-    whatsappLink: 'Olá Leidy! Desejo encomendar a Manta de Sofá Elegance em Crochê (12/15) por R$ 620,00'
+    whatsappLink: 'Olá Leide! Desejo encomendar a Manta de Sofá Elegance em Crochê (12/15) por R$ 620,00'
   },
   {
     id: 'cro_3',
@@ -165,7 +165,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 290,00',
     notes: 'Largura: 24cm, Altura: 16cm | Fio Náutico Premium Acetinado | Correntes e fechos banhados a ouro.',
     imageUrl: 'crochet_bag_gold',
-    whatsappLink: 'Olá Leidy! Quero adquirir a Bolsa Golden Hour em Crochê (13/15) por R$ 290,00'
+    whatsappLink: 'Olá Leide! Quero adquirir a Bolsa Golden Hour em Crochê (13/15) por R$ 290,00'
   },
   {
     id: 'cro_4',
@@ -177,7 +177,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 220,00',
     notes: 'Diâmetro: 85cm | Linha de seda pura mercerizada | Tom bege off-white com reflexos ouro.',
     imageUrl: 'crochet_classic_lace',
-    whatsappLink: 'Olá Leidy! Quero reservar o Centro de Mesa Vintage em Crochê (14/15) por R$ 220,00'
+    whatsappLink: 'Olá Leide! Quero reservar o Centro de Mesa Vintage em Crochê (14/15) por R$ 220,00'
   },
   {
     id: 'cro_5',
@@ -189,13 +189,13 @@ export const INITIAL_PRODUCTS: Product[] = [
     price: 'R$ 450,00',
     notes: '3 Unidades | Algodão encorpado nº 8 com corda de contorno metalizada resistente.',
     imageUrl: 'crochet_royalty_bath',
-    whatsappLink: 'Olá Leidy! Gostaria do Jogo de Banheiro Realeza em Crochê (15/15) por R$ 450,00'
+    whatsappLink: 'Olá Leide! Gostaria do Jogo de Banheiro Realeza em Crochê (15/15) por R$ 450,00'
   }
 ];
 
 export const DEFAULT_SETTINGS: AdminSettings = {
-  storeName: 'Lady Cosméticos - Perfumaria & Crochê Premium',
-  whatsappNumber: '5591985054580', // Active number for Lady Cosméticos
-  customGreeting: 'Olá! Conheci seu catálogo de luxo da Lady Cosméticos e adorei as peças.',
-  profileImageUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80&w=600' // Elegant default reference image representing Leidy
+  storeName: 'Leide Cosméticos - Perfumaria & Crochê Premium',
+  whatsappNumber: '5591985054580', // Active number for Leide Cosméticos
+  customGreeting: 'Olá! Conheci seu catálogo de luxo da Leide Cosméticos e adorei as peças.',
+  profileImageUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80&w=600' // Elegant default reference image representing Leide
 };

@@ -17,9 +17,9 @@ export default defineConfig(() => {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
         },
         manifest: {
-          name: 'Leidy Perfumaria e Crochê Premium',
-          short_name: 'Leidy Premium',
-          description: 'Catálogo Exclusivo Leidy Perfumaria & Crochê',
+          name: 'Leide Perfumaria e Crochê Premium',
+          short_name: 'Leide Premium',
+          description: 'Catálogo Exclusivo Leide Perfumaria & Crochê',
           theme_color: '#000000',
           background_color: '#000000',
           display: 'standalone',

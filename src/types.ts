@@ -23,5 +23,5 @@ export interface AdminSettings {
   storeName: string;
   whatsappNumber: string; // The phone number to receive catalog orders
   customGreeting: string; // Greeting text for WhatsApp redirects
-  profileImageUrl?: string; // Profile image for Leidy in the About Atelier section
+  profileImageUrl?: string; // Profile image for Leide in the About Atelier section
 }

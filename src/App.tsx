@@ -40,7 +40,7 @@ const WhatsAppIcon = ({ className = "w-5 h-5", ...props }) => (
 export default function App() {
   // Catalogs state loaded from LocalStorage or seeded from default 15 luxury items
   const [products, setProducts] = useState<Product[]>(() => {
-    const saved = localStorage.getItem('leidy_premium_products');
+    const saved = localStorage.getItem('leide_premium_products');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -52,7 +52,7 @@ export default function App() {
   });
 
   const [settings, setSettings] = useState<AdminSettings>(() => {
-    const saved = localStorage.getItem('leidy_premium_settings');
+    const saved = localStorage.getItem('leide_premium_settings');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -70,11 +70,11 @@ export default function App() {
 
   // Persist edits to LocalStorage
   useEffect(() => {
-    localStorage.setItem('leidy_premium_products', JSON.stringify(products));
+    localStorage.setItem('leide_premium_products', JSON.stringify(products));
   }, [products]);
 
   useEffect(() => {
-    localStorage.setItem('leidy_premium_settings', JSON.stringify(settings));
+    localStorage.setItem('leide_premium_settings', JSON.stringify(settings));
   }, [settings]);
 
   // --- SUPABASE SYNCHRONIZATION AND FETCH ENGINE ---
@@ -356,8 +356,8 @@ export default function App() {
   const resetToDefault = () => {
     setProducts(INITIAL_PRODUCTS);
     setSettings(DEFAULT_SETTINGS);
-    localStorage.removeItem('leidy_premium_products');
-    localStorage.removeItem('leidy_premium_settings');
+    localStorage.removeItem('leide_premium_products');
+    localStorage.removeItem('leide_premium_settings');
   };
 
   // Build high-performance path transform mapping progress P (0 - 1)
@@ -459,7 +459,7 @@ export default function App() {
     const activeIndex = Math.min(Math.max(indexProgress, 0), products.length - 1);
     
     if (scrollProgress < 0.1) {
-      setActiveCatalogText("A Coleção Exclusiva da Leidy");
+      setActiveCatalogText("A Coleção Exclusiva da Leide");
     } else if (products[activeIndex]) {
       const p = products[activeIndex];
       const catText = p.catalog === 'Natura' ? 'Fragrâncias Clássicas Natura' 
@@ -473,7 +473,7 @@ export default function App() {
   const handleWhatsAppCheckout = (p: Product) => {
     const finalPrice = p.promotionalPrice || p.price;
     const textMessage = p.whatsappLink ? encodeURIComponent(p.whatsappLink) 
-      : encodeURIComponent(`Olá Leidy! Fiquei encantada pelo "${p.title}" do seu catálogo de luxo (${finalPrice}). Gostaria de encomendar esta peça!`);
+      : encodeURIComponent(`Olá Leide! Fiquei encantada pelo "${p.title}" do seu catálogo de luxo (${finalPrice}). Gostaria de encomendar esta peça!`);
     const waUrl = `https://wa.me/${settings.whatsappNumber}?text=${textMessage}`;
     window.open(waUrl, '_blank');
   };
@@ -505,7 +505,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 md:py-4 flex items-center justify-between">
           <div className="flex flex-col select-none">
             <h1 className="text-xl sm:text-2xl flex items-center font-sans font-semibold tracking-[0.15em] text-gold">
-              LADY COSMÉTICOS
+              LEIDE COSMÉTICOS
             </h1>
             <span className="text-[8px] font-sans text-gold/80 tracking-[0.35em] font-medium block mt-0.5 uppercase">
               Perfumaria & Crochê Premium
@@ -519,28 +519,18 @@ export default function App() {
             <a href="#vitrine-catalogo" className="hover:text-white hover:underline underline-offset-4 transition-all duration-200">
               Coleções
             </a>
-            <a href="#sobre-leidy" className="hover:text-white hover:underline underline-offset-4 transition-all duration-200">
+            <a href="#sobre-leide" className="hover:text-white hover:underline underline-offset-4 transition-all duration-200">
               O Atelier
             </a>
             <button
               onClick={handleGeneralContact}
               className="text-gold/90 hover:text-gold transition-all duration-200 flex items-center gap-1 cursor-pointer tracking-[0.2em]"
             >
-              Falar com Leidy
+              Falar com Leide
             </button>
           </nav>
 
           <div className="flex items-center gap-3">
-            {/* Ambient Synth Controller */}
-            <button
-              onClick={toggleAmbientAudio}
-              className="p-1.5 border border-white/10 hover:border-gold/40 text-gray-400 hover:text-gold transition-all duration-200 cursor-pointer select-none"
-              title="Música de fundo para imersão"
-              id="btn-sound-toggle"
-            >
-              {isAudioPlaying ? <Volume2 className="w-3.5 h-3.5 text-gold animate-bounce" /> : <VolumeX className="w-3.5 h-3.5" />}
-            </button>
-
             {/* CMS Access Lock Icon styled precisely as the luxury border button */}
             <button
               onClick={() => setIsAdminOpen(true)}
@@ -606,7 +596,7 @@ export default function App() {
               <h1 
                 className="text-[9vw] sm:text-[9vw] md:text-[10vw] font-display font-light text-[#0a0a0a] select-none uppercase tracking-[0.05em] leading-none text-center"
               >
-                LADY COSMÉTICOS
+                LEIDE COSMÉTICOS
               </h1>
             </div>
           </div>
@@ -732,7 +722,7 @@ export default function App() {
             <span className="text-gold font-sans text-[10px] tracking-[0.25em] uppercase font-medium block">Experiência Integrada</span>
             <h3 className="text-2xl font-display font-light text-white tracking-wide">Encomendas Diretas 1-on-1</h3>
             <p className="text-xs text-white/50 leading-relaxed font-sans tracking-wide font-light">
-              Cada produto clicado gera um redirecionamento seguro para o WhatsApp oficial de atendimento da Leidy, garantindo exclusividade e envio consultivo personalizado.
+              Cada produto clicado gera um redirecionamento seguro para o WhatsApp oficial de atendimento da Leide, garantindo exclusividade e envio consultivo personalizado.
             </p>
           </div>
         </div>
@@ -873,7 +863,7 @@ export default function App() {
       </section>
 
       {/* ABOUT DESIGNER LEIDY SECTION */}
-      <section id="sobre-leidy" className="py-24 bg-black border-t border-white/10 relative">
+      <section id="sobre-leide" className="py-24 bg-black border-t border-white/10 relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           
           {/* Aesthetic Luxury Portrait Frame representing craftsmanship */}
@@ -892,7 +882,7 @@ export default function App() {
             {/* Core profile portrait displayed perfectly without distortion or ugly crops */}
             <img 
               src={settings.profileImageUrl || 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80&w=600'} 
-              alt="Lady Cosméticos" 
+              alt="Leide Cosméticos" 
               className="absolute inset-0 w-full h-full object-contain p-5 sm:p-6 opacity-90 group-hover:scale-102 transition-transform duration-700 z-10 bg-transparent"
               referrerPolicy="no-referrer"
             />
@@ -903,7 +893,7 @@ export default function App() {
 
             <div className="absolute bottom-8 left-8 right-8 text-left space-y-1.5 z-25 select-none">
               <span className="font-sans text-[8px] text-gold tracking-[0.3em] uppercase block font-semibold">ARTE & ESSÊNCIA</span>
-              <span className="font-display font-light text-2xl tracking-[0.2em] uppercase block text-white">LADY COSMÉTICOS</span>
+              <span className="font-display font-light text-2xl tracking-[0.2em] uppercase block text-white">LEIDE COSMÉTICOS</span>
               <span className="font-sans text-[8px] text-white/40 block tracking-[0.25em] uppercase">Curadoria Técnica Unificada</span>
             </div>
           </div>
@@ -915,7 +905,7 @@ export default function App() {
             
             <div className="space-y-1">
               <h2 className="text-5xl md:text-6xl font-serif font-light italic text-gold tracking-wide leading-none">
-                Lady Cosméticos
+                Leide Cosméticos
               </h2>
               <p className="text-[10px] tracking-[0.35em] text-white/60 uppercase font-sans font-medium">
                 PERFUMES & CROCHÊ
@@ -928,7 +918,7 @@ export default function App() {
 
             <div className="space-y-4 border-l border-gold/30 pl-5 mt-2">
               <p className="text-xs text-white/70 leading-relaxed font-sans font-light tracking-wide">
-                <span className="text-gold font-semibold uppercase tracking-wider text-[11px] block md:inline mr-1">O Universo Lady Cosméticos —</span> Acredito que a verdadeira beleza floresce quando cuidamos da nossa autoestima. Meu propósito é trazer acolhimento, cuidado diário e bem-estar através de fragrâncias marcantes e do carinho de peças artesanais feitas à mão.
+                <span className="text-gold font-semibold uppercase tracking-wider text-[11px] block md:inline mr-1">O Universo Leide Cosméticos —</span> Acredito que a verdadeira beleza floresce quando cuidamos da nossa autoestima. Meu propósito é trazer acolhimento, cuidado diário e bem-estar através de fragrâncias marcantes e do carinho de peças artesanais feitas à mão.
               </p>
               <p className="text-xs text-white/50 leading-relaxed font-sans font-light tracking-wide">
                 Com uma seleção impecável de produtos Natura, O Boticário e crochê exclusivo, oferecemos mais do que produtos: entregamos momentos de carinho e valorização pessoal.
@@ -940,7 +930,7 @@ export default function App() {
                 onClick={handleGeneralContact}
                 className="px-6 py-3.5 bg-[#25D366] text-black hover:bg-[#25D366]/90 border border-[#25D366] text-xs font-sans font-bold tracking-[0.15em] uppercase transition-all duration-300 cursor-pointer flex items-center gap-2"
               >
-                <WhatsAppIcon className="w-4 h-4 fill-black" /> Falar com Leidy no WhatsApp
+                <WhatsAppIcon className="w-4 h-4 fill-black" /> Falar com Leide no WhatsApp
               </button>
             </div>
           </div>
@@ -1017,7 +1007,7 @@ export default function App() {
                       className="w-full py-3.5 md:py-4 bg-[#25D366] hover:bg-[#25D366]/95 text-black font-sans font-bold tracking-[0.15em] text-[11px] uppercase transition-all duration-300 pointer-events-auto select-none rounded-none cursor-pointer flex items-center justify-center gap-2"
                       id="btn-inspect-whatsapp-order"
                     >
-                      <WhatsAppIcon className="w-4 h-4 fill-black" /> FAZER PEDIDO COM A LEIDY NO WHATSAPP
+                      <WhatsAppIcon className="w-4 h-4 fill-black" /> FAZER PEDIDO COM A LEIDE NO WHATSAPP
                     </button>
                   </div>
                 </div>
@@ -1043,7 +1033,7 @@ export default function App() {
       <footer className="bg-black py-20 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="space-y-4">
-            <h4 className="text-lg font-display font-light text-white tracking-widest uppercase">LADY COSMÉTICOS</h4>
+            <h4 className="text-lg font-display font-light text-white tracking-widest uppercase">LEIDE COSMÉTICOS</h4>
             <p className="text-xs text-white/50 leading-relaxed font-sans tracking-wide font-light">
               O Toque Clássico da Arte Têxtil Fina e a Majestade da Perfumaria de Luxo em conexões intuitivas e exclusivas.
             </p>
@@ -1063,7 +1053,7 @@ export default function App() {
               <li><a href="#vitrine-catalogo" className="hover:text-gold transition-colors block">Fragrâncias Natura Exclusivas</a></li>
               <li><a href="#vitrine-catalogo" className="hover:text-gold transition-colors block">Fragrâncias O Boticário</a></li>
               <li><a href="#vitrine-catalogo" className="hover:text-gold transition-colors block">Crochês sob Encomenda</a></li>
-              <li><a href="#vitrine-catalogo" className="hover:text-gold transition-colors block">Selo Leidy Privé</a></li>
+              <li><a href="#vitrine-catalogo" className="hover:text-gold transition-colors block">Selo Leide Privé</a></li>
             </ul>
           </div>
 
@@ -1079,7 +1069,7 @@ export default function App() {
             <ul className="text-xs font-sans font-light tracking-wide text-white/50 space-y-2.5 leading-relaxed">
               <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 text-gold/80" /> {settings.whatsappNumber}</li>
               <li className="flex items-center gap-2"><Calendar className="w-3.5 h-3.5 text-gold/80" /> Atendimento Personalizado</li>
-              <li className="text-[10px] text-white/30 tracking-wide mt-3 uppercase">© 2026 Lady Cosméticos. Todos os direitos reservados.</li>
+              <li className="text-[10px] text-white/30 tracking-wide mt-3 uppercase">© 2026 Leide Cosméticos. Todos os direitos reservados.</li>
             </ul>
           </div>
         </div>

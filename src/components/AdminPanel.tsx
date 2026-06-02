@@ -80,7 +80,7 @@ export default function AdminPanel({
     e.preventDefault();
     if (supabase) {
       const { error } = await supabase.auth.signInWithPassword({
-        email: 'admin@leidy.com',
+        email: 'admin@leide.com',
         password: password
       });
       if (error) {
@@ -90,7 +90,7 @@ export default function AdminPanel({
         setLoginError('');
       }
     } else {
-      if (password === 'leidypremium') {
+      if (password === 'leidepremium') {
         setIsAuthenticated(true);
         setLoginError('');
       } else {
@@ -199,7 +199,7 @@ export default function AdminPanel({
     if (isAddingNew) {
       const newId = `custom_${Date.now()}`;
       // Format basic whatsapp link fallback
-      const linkText = formData.whatsappLink.trim() || `Olá Leidy! Desejo saber mais sobre o produto: ${formData.title}`;
+      const linkText = formData.whatsappLink.trim() || `Olá Leide! Desejo saber mais sobre o produto: ${formData.title}`;
       
       const newProduct: Product = {
         id: newId,
@@ -229,7 +229,7 @@ export default function AdminPanel({
             promotionalPrice: formData.promotionalPrice || undefined,
             notes: formData.notes,
             imageUrl: formData.imageUrl,
-            whatsappLink: formData.whatsappLink || `Olá Leidy! Quero encomendar o ${formData.title}`
+            whatsappLink: formData.whatsappLink || `Olá Leide! Quero encomendar o ${formData.title}`
           };
         }
         return p;
@@ -257,7 +257,7 @@ export default function AdminPanel({
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify({ products, settings }, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute('href', dataStr);
-    downloadAnchor.setAttribute('download', 'catalogo_leidy_backup.json');
+    downloadAnchor.setAttribute('download', 'catalogo_leide_backup.json');
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -302,7 +302,7 @@ export default function AdminPanel({
           </div>
           <div>
             <h2 className="text-xl md:text-2xl font-display font-bold tracking-tight text-white uppercase" id="title-admin-header">
-              {isAuthenticated ? 'CMS - Painel de Controle Leidy' : 'Acesso Restrito - Admin'}
+              {isAuthenticated ? 'CMS - Painel de Controle Leide' : 'Acesso Restrito - Admin'}
             </h2>
             <p className="text-xs font-mono text-gray-400 tracking-wider">
               {isAuthenticated ? 'MÓDULO DE GERENCIAMENTO DE ACERVOS' : 'PAINEL DE ADMINISTRAÇÃO'}
@@ -328,7 +328,7 @@ export default function AdminPanel({
 
             <div className="text-center mb-8">
               <p className="text-sm text-gray-300">
-                Seja bem-vinda, <strong className="text-gold">Leidy</strong>. Digite sua senha pessoal para gerenciar os catálogos.
+                Seja bem-vinda, <strong className="text-gold">Leide</strong>. Digite sua senha pessoal para gerenciar os catálogos.
               </p>
             </div>
 
@@ -338,7 +338,7 @@ export default function AdminPanel({
                   Email Autenticado
                 </label>
                 <div className="w-full px-4 py-3 bg-[#111] text-gray-400 font-mono text-sm border border-white/10 select-none">
-                  admin@leidy.com
+                  admin@leide.com
                 </div>
               </div>
 
@@ -690,7 +690,7 @@ export default function AdminPanel({
                           type="text"
                           value={formData.whatsappLink}
                           onChange={(e) => setFormData({ ...formData, whatsappLink: e.target.value })}
-                          placeholder="Ex: Olá Leidy! Gostaria de encomendar este produto..."
+                          placeholder="Ex: Olá Leide! Gostaria de encomendar este produto..."
                           className="w-full bg-black border border-white/10 p-2 text-white outline-none focus:border-gold"
                           id="edit-walink"
                         />
@@ -845,7 +845,7 @@ export default function AdminPanel({
                       {/* Precise centerpiece preview matching the live layout */}
                       <img
                         src={settings.profileImageUrl || 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80&w=600'}
-                        alt="Previsualização Lady Cosméticos"
+                        alt="Previsualização Leide Cosméticos"
                         className="absolute inset-0 w-full h-full object-contain p-3 opacity-95 z-10 bg-transparent"
                         referrerPolicy="no-referrer"
                       />
@@ -1022,7 +1022,7 @@ export default function AdminPanel({
                     <p className="text-gray-400 text-[11px] leading-relaxed">
                       {isSupabaseConfigured ? (
                         <span>
-                          Sua aplicação <strong>Lady Cosméticos</strong> está conectada em tempo real ao banco de dados relacional oficial de produção da <strong>Supabase</strong>! Qualquer nova modificação feita nos produtos, links rápidos, imagens e configurações do WhatsApp é sincronizada com um mecanismo inteligente em background com debounce automático de 1.5s preservando a performance do site em 60FPS.
+                          Sua aplicação <strong>Leide Cosméticos</strong> está conectada em tempo real ao banco de dados relacional oficial de produção da <strong>Supabase</strong>! Qualquer nova modificação feita nos produtos, links rápidos, imagens e configurações do WhatsApp é sincronizada com um mecanismo inteligente em background com debounce automático de 1.5s preservando a performance do site em 60FPS.
                         </span>
                       ) : (
                         <span>
