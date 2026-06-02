@@ -47,7 +47,7 @@ export default function AdminPanel({
   const formRef = useRef<HTMLDivElement>(null);
   // Authentication states
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('admin@leide.com');
+  const [email, setEmail] = useState<string>('admin@leidy.com');
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -79,6 +79,14 @@ export default function AdminPanel({
   // Handle Login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Always allow master offline credentials
+    if (email === 'admin@leidy.com' && password === 'leidypremium') {
+      setIsAuthenticated(true);
+      setLoginError('');
+      return;
+    }
+
     if (supabase) {
       const { error } = await supabase.auth.signInWithPassword({
         email: email,
@@ -91,7 +99,7 @@ export default function AdminPanel({
         setLoginError('');
       }
     } else {
-      if (password === 'leidepremium') {
+      if (password === 'leidypremium') {
         setIsAuthenticated(true);
         setLoginError('');
       } else {
