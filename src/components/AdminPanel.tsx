@@ -24,7 +24,8 @@ import {
   Database,
   Copy,
   Eye,
-  EyeOff
+  EyeOff,
+  Trash
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -957,6 +958,19 @@ export default function AdminPanel({
                         id="btn-export-json"
                       >
                         <Download className="w-3.5 h-3.5" /> EXPORTAR CATÁLOGO (.JSON)
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          if (window.confirm('Tem certeza que deseja ZERAR O CATÁLOGO? Isso apagará todos os produtos locais e da nuvem!')) {
+                            setProducts([]);
+                            logAction('Limpou o catálogo completamente.');
+                          }
+                        }}
+                        className="px-3 py-2 bg-red-900/40 hover:bg-red-900/60 text-red-500 font-mono font-bold text-xs select-none cursor-pointer flex items-center gap-1.5"
+                        id="btn-clear-catalog"
+                      >
+                        <Trash className="w-3.5 h-3.5" /> ZERAR TODOS OS PRODUTOS
                       </button>
 
                       <button
